@@ -24,7 +24,7 @@ public class AddContactActivity extends AppCompatActivity {
         email =(EditText) findViewById(R.id.email);
 
         context = getApplicationContext();
-        contact_list.loadContacts();
+        contact_list.loadContacts(context);
     }
 
     public void saveContact(View view){

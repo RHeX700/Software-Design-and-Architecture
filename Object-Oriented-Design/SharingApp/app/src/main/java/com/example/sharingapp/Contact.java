@@ -8,7 +8,7 @@ public class Contact {
     private String email;
     private String id;
 
-    public void Contact(String username, String email, String id){
+    public Contact(String username, String email, String id){
         this.username = username;
         this.email = email;
 
@@ -16,7 +16,7 @@ public class Contact {
         if (id == null){
             setId();
         }else {
-            updateId();
+            updateId(id);
         }
     }
 
@@ -29,6 +29,22 @@ public class Contact {
     }
 
     public String getId(){
-        return this.id;
+        return id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

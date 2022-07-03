@@ -42,7 +42,7 @@ public class Item {
         return this.id;
     }
 
-    public String getId() {
+    public String setId() {
         this.id = UUID.randomUUID().toString();
     }
 
