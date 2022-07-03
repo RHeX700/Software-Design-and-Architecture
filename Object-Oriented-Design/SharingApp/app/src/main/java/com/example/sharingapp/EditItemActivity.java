@@ -73,6 +73,9 @@ public class EditItemActivity extends AppCompatActivity {
                 contact_list.getAllUsernames());
 
 
+        borrower_spinner.setAdapter(adapter);
+
+
         Intent intent = getIntent(); // Get intent from ItemsFragment
         int pos = intent.getIntExtra("position", 0);
 
@@ -216,8 +219,18 @@ public class EditItemActivity extends AppCompatActivity {
 
         } else {
             // Means was previously available
-            borrower.setVisibility(View.VISIBLE);
-            borrower_tv.setVisibility(View.VISIBLE);
+
+            if (contact_list.getsize() == 0){
+
+                invisible.isEnabled(false);
+                invisible.setVisibility(View.VISIBLE);
+                invisible.requestFocus();
+                invisible.setError("No contacts available! Must add borrower to contacts.");
+                status.setChecked(true);
+            }else {
+                borrower_spinner.setVisibility(View.VISIBLE);
+                borrower_tv.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
