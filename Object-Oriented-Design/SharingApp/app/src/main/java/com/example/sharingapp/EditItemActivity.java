@@ -7,8 +7,10 @@ import android.provider.MediaStore;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ public class EditItemActivity extends AppCompatActivity {
     private Item item;
     private Context context;
 
+    private ContactList contact_list = new ContactList();
+
     private Bitmap image;
     private int REQUEST_CODE = 1;
     private ImageView photo;
@@ -33,8 +37,11 @@ public class EditItemActivity extends AppCompatActivity {
     private EditText width;
     private EditText height;
     private EditText borrower;
-    private TextView  borrower_tv;
+    private Spinner borrower_spinner;
+    private TextView borrower_tv;
     private Switch status;
+    private EditText invisible;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +59,19 @@ public class EditItemActivity extends AppCompatActivity {
         photo = (ImageView) findViewById(R.id.image_view);
         status = (Switch) findViewById(R.id.available_switch);
 
+        borrower_spinner = (Spinner) findViewById(R.id.borrower_spinner);
+        invisible = (EditText) findViewById(R.id.invisible);
+
+        invisible.setVisibility(View.GONE);
+
         context = getApplicationContext();
         item_list.loadItems(context);
+        contact_list.loadContacts(context);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                contact_list.getAllUsernames());
+
 
         Intent intent = getIntent(); // Get intent from ItemsFragment
         int pos = intent.getIntExtra("position", 0);
