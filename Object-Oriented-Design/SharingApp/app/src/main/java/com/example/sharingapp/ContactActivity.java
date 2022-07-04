@@ -32,7 +32,7 @@ public class ContactActivity extends AppCompatActivity {
         item_list.loadItems(context);
 
         my_contacts = (ListView) findViewById(R.id.my_contacts);
-        adapter = new ContactAdapter(ContactActivity.this, contact_list.get_contacts());
+        adapter = new ContactAdapter(ContactActivity.this, contact_list.getContacts());
 
         my_contacts.setAdapter(adapter);
 
@@ -67,7 +67,7 @@ public class ContactActivity extends AppCompatActivity {
         super.onStart();
 
         context = getApplicationContext();
-        contact_list.load_contacts(context);
+        contact_list.loadContacts(context);
 
         my_contacts = (ListView) findViewById(R.id.my_contacts);
 

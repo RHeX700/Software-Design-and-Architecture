@@ -28,7 +28,7 @@ public class Item {
         this.description = description;
         this.dimensions = dimensions;
         this.status = "Available";
-        this.borrower = "";
+        this.borrower = null;
         addImage(image);
 
         if (id == null){
@@ -42,7 +42,7 @@ public class Item {
         return this.id;
     }
 
-    public String setId() {
+    public void setId() {
         this.id = UUID.randomUUID().toString();
     }
 
@@ -106,14 +106,6 @@ public class Item {
             byte[] b = byteArrayBitmapStream.toByteArray();
             image_base64 = Base64.encodeToString(b, Base64.DEFAULT);
         }
-    }
-
-    public Bitmap getImage(){
-        if (image == null && image_base64 != null) {
-            byte[] decodeString = Base64.decode(image_base64, Base64.DEFAULT);
-            image = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
-        }
-        return image;
     }
 }
 

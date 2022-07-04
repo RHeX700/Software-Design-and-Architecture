@@ -8,12 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ContactAdapter extends ArrayAdapter<Contact> {
     private LayoutInflater inflater;
     private Context context;
 
-    public ContactAdapter(Context context, Contact contact){
-        super(context, 0, contact);
+    public ContactAdapter(Context context, ArrayList<Contact> contacts){
+        super(context, 0, contacts);
 
         this.context = context;
         this.inflater = LayoutInflater.from(context);
