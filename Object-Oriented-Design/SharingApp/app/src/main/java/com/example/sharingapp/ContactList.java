@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class ContactList {
 
-    private ArrayList<Contact> contacts;
-    private String FILENAME;
+    private static ArrayList<Contact> contacts;
+    private String FILENAME = "contacts.sav";
 
     public ContactList(){
 
@@ -82,7 +82,7 @@ public class ContactList {
             FileInputStream fis = context.openFileInput(FILENAME);
             InputStreamReader isr = new InputStreamReader(fis);
             Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Contact>>() {}.getType();
             contacts = gson.fromJson(isr, listType); // temporary
             fis.close();
         } catch (FileNotFoundException e) {

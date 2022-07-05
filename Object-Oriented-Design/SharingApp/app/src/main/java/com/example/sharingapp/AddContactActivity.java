@@ -45,7 +45,7 @@ public class AddContactActivity extends AppCompatActivity {
             email.setError("Must be an email address");
         }
 
-        if(!contact_list.isUsernameAvailable(username_str)){
+        if(contact_list.isUsernameAvailable(username_str)){
             username.setError("Username already taken");
             return;
         }

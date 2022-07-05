@@ -19,7 +19,7 @@ public class ContactActivity extends AppCompatActivity {
     private ListView my_contacts;
     private ArrayAdapter<Contact> adapter;
     private Context context;
-    private ItemList item_list;
+    private ItemList item_list = new ItemList();
     private ContactList active_borrower_list = new ContactList();
 
     @Override
@@ -31,7 +31,7 @@ public class ContactActivity extends AppCompatActivity {
         contact_list.loadContacts(context);
         item_list.loadItems(context);
 
-        my_contacts = (ListView) findViewById(R.id.my_contacts);
+        my_contacts = findViewById(R.id.my_contacts);
         adapter = new ContactAdapter(ContactActivity.this, contact_list.getContacts());
 
         my_contacts.setAdapter(adapter);
@@ -77,7 +77,7 @@ public class ContactActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void addContactsActivity(View view){
+    public void addContactActivity(View view){
         Intent intent = new Intent(this, AddContactActivity.class);
         startActivity(intent);
     }

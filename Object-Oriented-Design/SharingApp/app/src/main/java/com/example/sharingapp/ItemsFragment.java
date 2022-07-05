@@ -40,7 +40,7 @@ public abstract class ItemsFragment extends Fragment {
 
     public void setVariables(int resource, int id ) {
         rootView = inflater.inflate(resource, container, false);
-        list_view = (ListView) rootView.findViewById(id);
+        list_view = rootView.findViewById(id);
         selected_items = filterItems();
     }
 

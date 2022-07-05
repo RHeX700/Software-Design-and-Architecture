@@ -96,14 +96,15 @@
             android:inputType="numberDecimal"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:maxLength="24"/>
+
         <EditText
             android:id="@+id/width"
             android:layout_width="64dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="@string/width_hint"
             android:inputType="numberDecimal"
-            android:textAppearance="@android:style/TextAppearance.Medium"
-            android:maxLength="24" />
+            android:maxLength="24"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
         <EditText
             android:id="@+id/height"
             android:layout_width="64dp"

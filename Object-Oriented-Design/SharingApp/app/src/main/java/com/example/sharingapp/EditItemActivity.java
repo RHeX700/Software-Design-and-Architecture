@@ -20,14 +20,14 @@ import android.widget.TextView;
  */
 public class EditItemActivity extends AppCompatActivity {
 
-    private ItemList item_list = new ItemList();
+    private final ItemList item_list = new ItemList();
     private Item item;
     private Context context;
 
-    private ContactList contact_list = new ContactList();
+    private final ContactList contact_list = new ContactList();
 
     private Bitmap image;
-    private int REQUEST_CODE = 1;
+    private final int REQUEST_CODE = 1;
     private ImageView photo;
 
     private EditText title;
@@ -48,19 +48,18 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
-        title = (EditText) findViewById(R.id.title);
-        maker = (EditText) findViewById(R.id.maker);
-        description = (EditText) findViewById(R.id.description);
-        length = (EditText) findViewById(R.id.length);
-        width = (EditText) findViewById(R.id.width);
-        height = (EditText) findViewById(R.id.height);
-        borrower = (EditText) findViewById(R.id.borrower);
-        borrower_tv = (TextView) findViewById(R.id.borrower_tv);
-        photo = (ImageView) findViewById(R.id.image_view);
-        status = (Switch) findViewById(R.id.available_switch);
+        title = findViewById(R.id.title);
+        maker = findViewById(R.id.maker);
+        description = findViewById(R.id.description);
+        length = findViewById(R.id.length);
+        width = findViewById(R.id.width);
+        height = findViewById(R.id.height);
+        borrower_tv = findViewById(R.id.borrower_tv);
+        photo = findViewById(R.id.image_view);
+        status = findViewById(R.id.available_switch);
 
-        borrower_spinner = (Spinner) findViewById(R.id.borrower_spinner);
-        invisible = (EditText) findViewById(R.id.invisible);
+        borrower_spinner = findViewById(R.id.borrower_spinner);
+        invisible = findViewById(R.id.invisible);
 
         invisible.setVisibility(View.GONE);
 
@@ -68,7 +67,7 @@ public class EditItemActivity extends AppCompatActivity {
         item_list.loadItems(context);
         contact_list.loadContacts(context);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 contact_list.getAllUsernames());
 
@@ -94,10 +93,9 @@ public class EditItemActivity extends AppCompatActivity {
         String status_str = item.getStatus();
         if (status_str.equals("Borrowed")) {
             status.setChecked(false);
-            borrower.setText(item.getBorrower());
         } else {
             borrower_tv.setVisibility(View.GONE);
-            borrower.setVisibility(View.GONE);
+            borrower_spinner.setVisibility(View.GONE);
         }
 
         image = item.getImage();
@@ -121,8 +119,9 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int request_code, int result_code, Intent intent){
-        if (request_code == REQUEST_CODE && result_code == RESULT_OK){
+    protected void onActivityResult(int request_code, int result_code, Intent intent) {
+        super.onActivityResult(request_code, result_code, intent);
+        if (request_code == REQUEST_CODE && result_code == RESULT_OK) {
             Bundle extras = intent.getExtras();
             image = (Bitmap) extras.get("data");
             photo.setImageBitmap(image);
@@ -146,7 +145,14 @@ public class EditItemActivity extends AppCompatActivity {
         String length_str = length.getText().toString();
         String width_str = width.getText().toString();
         String height_str = height.getText().toString();
-        String borrower_str = borrower.getText().toString();
+
+        Contact contact = null;
+
+        String borrower_str = null;
+        if (!status.isChecked()) {
+            borrower_str = borrower_spinner.getSelectedItem().toString();
+            contact = contact_list.getContactByUsername(borrower_str);
+        }
 
         Dimensions dimensions = new Dimensions(length_str, width_str, height_str);
 
@@ -194,7 +200,7 @@ public class EditItemActivity extends AppCompatActivity {
         boolean checked = status.isChecked();
         if (!checked) {
             updated_item.setStatus("Borrowed");
-            updated_item.setBorrower(borrower_str);
+            updated_item.setBorrower(contact_list.getContactByUsername(borrower_str));
         }
         item_list.addItem(updated_item);
 
@@ -214,15 +220,15 @@ public class EditItemActivity extends AppCompatActivity {
             // Means was previously borrowed
             borrower.setVisibility(View.GONE);
             borrower_tv.setVisibility(View.GONE);
-            item.setBorrower("");
+            item.setBorrower(null);
             item.setStatus("Available");
 
         } else {
             // Means was previously available
 
-            if (contact_list.getsize() == 0){
+            if (contact_list.getSize() == 0){
 
-                invisible.isEnabled(false);
+                invisible.setEnabled(false);
                 invisible.setVisibility(View.VISIBLE);
                 invisible.requestFocus();
                 invisible.setError("No contacts available! Must add borrower to contacts.");

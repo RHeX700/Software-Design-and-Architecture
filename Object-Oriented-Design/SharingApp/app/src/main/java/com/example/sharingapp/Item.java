@@ -107,5 +107,9 @@ public class Item {
             image_base64 = Base64.encodeToString(b, Base64.DEFAULT);
         }
     }
+
+    public Bitmap getImage(){
+        return image;
+    }
 }
 
