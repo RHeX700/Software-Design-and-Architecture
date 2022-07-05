@@ -186,10 +186,6 @@ public class EditItemActivity extends AppCompatActivity {
             return;
         }
 
-        if (borrower_str.equals("") && !status.isChecked()) {
-            borrower.setError("Empty field!");
-            return;
-        }
 
         // Reuse the item id
         String id = item.getId();
