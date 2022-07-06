@@ -57,6 +57,14 @@ public class ContactActivity extends AppCompatActivity {
 
                     }
                 }
+
+                contact_list.loadContacts(context);
+                int meta_pos = contact_list.getIndex(contact);
+                Intent intent = new Intent(context, EditContactActivity.class);
+
+                intent.putExtra("position", meta_pos);
+                startActivity(intent);
+                return;
             }
         });
 

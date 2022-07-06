@@ -214,7 +214,7 @@ public class EditItemActivity extends AppCompatActivity {
     public void toggleSwitch(View view){
         if (status.isChecked()) {
             // Means was previously borrowed
-            borrower.setVisibility(View.GONE);
+
             borrower_tv.setVisibility(View.GONE);
             item.setBorrower(null);
             item.setStatus("Available");
