@@ -38,9 +38,9 @@ public class ContactActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
-        my_contacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        my_contacts.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Contact contact = adapter.getItem(pos);
 
                 ArrayList<Contact>  active_borrowers = item_list.getActiveBorrowers();
@@ -53,7 +53,7 @@ public class ContactActivity extends AppCompatActivity {
                         int duration = Toast.LENGTH_SHORT;
 
                         Toast.makeText(context, text, duration).show();
-                        return;
+                        return true;
 
                     }
                 }
@@ -64,7 +64,7 @@ public class ContactActivity extends AppCompatActivity {
 
                 intent.putExtra("position", meta_pos);
                 startActivity(intent);
-                return;
+                return true;
             }
         });
 

@@ -50,8 +50,8 @@ public class ContactList {
         contacts.remove(contact);
     }
 
-    public Contact getContact(int pos){
-        return contacts.get(pos);
+    public Contact getContact(int index){
+        return contacts.get(index);
     }
 
     public int getSize(){
@@ -59,7 +59,14 @@ public class ContactList {
     }
 
     public int getIndex(Contact contact){
-        return contacts.indexOf(contact);
+        int pos = 0;
+        for (Contact i : contacts) {
+            if (contact.getId().equals(i.getId())) {
+                return pos;
+            }
+            pos = pos+1;
+        }
+        return -1;
     }
 
     public boolean hasContact(Contact contact){

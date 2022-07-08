@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditContactActivity extends AppCompatActivity {
 
-    private ContactList contact_list;
+    private ContactList contact_list = new ContactList();
     private Contact contact;
     private EditText email;
     private EditText username;
@@ -29,8 +30,8 @@ public class EditContactActivity extends AppCompatActivity {
         int pos = intent.getIntExtra("position", 0);
         contact = contact_list.getContact(pos);
 
-        username = (EditText) findViewById(R.id.username);
-        email = (EditText) findViewById(R.id.email);
+        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
 
         username.setText(contact.getUsername());
         email.setText(contact.getEmail());
