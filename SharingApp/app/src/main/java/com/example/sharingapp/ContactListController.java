@@ -2,6 +2,8 @@ package com.example.sharingapp;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 public class ContactListController {
     public ContactListController(ContactList contact_list) {
     }
@@ -19,5 +21,17 @@ public class ContactListController {
     }
 
     public int getIndex(Contact contact) {
+    }
+
+    public void setContacts(ArrayList<Contact> active_borrowers) {
+    }
+
+    public boolean hasContact(Contact contact) {
+    }
+
+    public void removeObserver(Observer observer) {
+    }
+
+    public ArrayList<Contact> getContacts() {
     }
 }

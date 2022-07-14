@@ -34,8 +34,10 @@ public class ContactActivity extends AppCompatActivity implements Observer{
         setContentView(R.layout.activity_contact);
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
-        item_list.loadItems(context);
+
+        contact_list_controller.addObserver(this);
+        contact_list_controller.loadContacts(context);
+        item_list_controller.loadItems(context);
 
         my_contacts = findViewById(R.id.my_contacts);
         adapter = new ContactAdapter(ContactActivity.this, contact_list.getContacts());
@@ -49,11 +51,11 @@ public class ContactActivity extends AppCompatActivity implements Observer{
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Contact contact = adapter.getItem(pos);
 
-                ArrayList<Contact>  active_borrowers = item_list.getActiveBorrowers();
-                active_borrower_list.setContacts(active_borrowers);
+                ArrayList<Contact>  active_borrowers = item_list_controller.getActiveBorrowers();
+                active_borrower_list_controller.setContacts(active_borrowers);
 
                 if(active_borrower_list != null){
-                    if(active_borrower_list.hasContact(contact)){
+                    if(active_borrower_list_controller.hasContact(contact)){
                         CharSequence text = "Cannot delete or edit active borrower";
 
                         int duration = Toast.LENGTH_SHORT;
@@ -64,8 +66,8 @@ public class ContactActivity extends AppCompatActivity implements Observer{
                     }
                 }
 
-                contact_list.loadContacts(context);
-                int meta_pos = contact_list.getIndex(contact);
+                contact_list_controller.loadContacts(context);
+                int meta_pos = contact_list_controller.getIndex(contact);
                 Intent intent = new Intent(context, EditContactActivity.class);
 
                 intent.putExtra("position", meta_pos);
@@ -81,7 +83,7 @@ public class ContactActivity extends AppCompatActivity implements Observer{
         super.onStart();
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
+        contact_list_controller.loadContacts(context);
 
         my_contacts = (ListView) findViewById(R.id.my_contacts);
 
@@ -97,7 +99,17 @@ public class ContactActivity extends AppCompatActivity implements Observer{
     }
 
     @Override
-    public void update() {
+    protected void onDestroy() {
+        super.onDestroy();
+        contact_list_controller.removeObserver(this);
+    }
 
+
+    @Override
+    public void update() {
+        my_contacts = (ListView) findViewById(R.id.my_contacts);
+        adapter = new ContactAdapter(ContactActivity.this, contact_list_controller.getContacts());
+        my_contacts.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }
