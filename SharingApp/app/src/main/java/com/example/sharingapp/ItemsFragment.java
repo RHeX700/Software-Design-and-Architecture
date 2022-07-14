@@ -57,6 +57,27 @@ public abstract class ItemsFragment extends Fragment implements Observer{
         item_list_controller.loadItems(context);
     }
 
+    public void setFragmentOnItemLongClickListener(){
+
+        // When item is long clicked, this starts EditItemActivity
+        list_view.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+
+                Item item = adapter.getItem(pos);
+
+                int meta_pos = item_list_controller.getIndex(item);
+                if (meta_pos >= 0) {
+
+                    Intent edit = new Intent(context, EditItemActivity.class);
+                    edit.putExtra("position", meta_pos);
+                    startActivity(edit);
+                }
+                return true;
+            }
+        });
+    }
+
 
     public void setAdapter(Fragment fragment){
         adapter = new ItemAdapter(context, selected_items, fragment);
@@ -81,6 +102,13 @@ public abstract class ItemsFragment extends Fragment implements Observer{
                 return true;
             }
         });
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        item_list_controller.removeObserver(this);
     }
 
     @Override
