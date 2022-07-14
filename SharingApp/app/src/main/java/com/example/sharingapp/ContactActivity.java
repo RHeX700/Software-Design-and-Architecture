@@ -13,14 +13,20 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements Observer{
 
     private ContactList contact_list = new ContactList();
+    private ContactListController contact_list_controller = new ContactListController(contact_list);
+
     private ListView my_contacts;
     private ArrayAdapter<Contact> adapter;
     private Context context;
+
     private ItemList item_list = new ItemList();
+    private ItemListController item_list_controller = new ItemListController(item_list);
+
     private ContactList active_borrower_list = new ContactList();
+    private ContactListController active_borrower_list_controller = new ContactListController(active_borrower_list);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,5 +94,10 @@ public class ContactActivity extends AppCompatActivity {
     public void addContactActivity(View view){
         Intent intent = new Intent(this, AddContactActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void update() {
+
     }
 }
