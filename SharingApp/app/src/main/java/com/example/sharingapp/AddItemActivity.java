@@ -27,6 +27,7 @@ public class AddItemActivity extends AppCompatActivity {
     private int REQUEST_CODE = 1;
 
     private ItemList item_list = new ItemList();
+    private ItemListController item_list_controller = new ItemListController(item_list);
     private Context context;
 
     @Override
@@ -45,7 +46,7 @@ public class AddItemActivity extends AppCompatActivity {
         photo.setImageResource(android.R.drawable.ic_menu_gallery);
 
         context = getApplicationContext();
-        item_list.loadItems(context);
+        item_list_controller.loadItems(context);
     }
 
     public void saveItem (View view) {
@@ -89,6 +90,8 @@ public class AddItemActivity extends AppCompatActivity {
 
         Dimensions dimensions = new Dimensions(length_str, width_str, height_str);
         Item item = new Item(title_str, maker_str, description_str, dimensions, image, null );
+        ItemController item_controller = new ItemController(item);
+        item_controller.setDimensions(length_str, width_str, height_str);
 
 
         AddItemCommand add_item_command = new AddItemCommand(item_list, item, context);

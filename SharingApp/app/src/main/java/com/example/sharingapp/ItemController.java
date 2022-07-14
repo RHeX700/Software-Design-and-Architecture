@@ -46,17 +46,17 @@ public class ItemController {
         item.setDimensions(new Dimensions(length, width, height));
     }
 
-//    public String getLength() {
-//        return item.getLength();
-//    }
-//
-//    public String getWidth(){
-//        return item.getWidth();
-//    }
-//
-//    public String getHeight(){
-//        return item.getHeight();
-//    }
+    public String getLength() {
+        return item.getDimensions().getLength();
+    }
+
+    public String getWidth(){
+        return item.getDimensions().getWidth();
+    }
+
+    public String getHeight(){
+        return item.getDimensions().getHeight();
+    }
 
     public void setStatus(String status) {
         item.setStatus(status);

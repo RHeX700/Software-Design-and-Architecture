@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Superclass of AvailableItemsFragment, BorrowedItemsFragment and AllItemsFragment
  */
-public abstract class ItemsFragment extends Fragment {
+public abstract class ItemsFragment extends Fragment implements Observer{
 
     ItemList item_list = new ItemList();
     View rootView = null;
