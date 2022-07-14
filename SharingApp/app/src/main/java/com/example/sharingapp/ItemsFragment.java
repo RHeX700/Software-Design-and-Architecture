@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public abstract class ItemsFragment extends Fragment implements Observer{
 
     ItemList item_list = new ItemList();
+    ItemListController item_list_controller = new ItemListController(item_list);
+
     View rootView = null;
     private ListView list_view = null;
     private ArrayAdapter<Item> adapter = null;
@@ -26,14 +28,18 @@ public abstract class ItemsFragment extends Fragment implements Observer{
     private LayoutInflater inflater;
     private ViewGroup container;
     private Context context;
+    private Fragment fragment;
+    private boolean update = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         context = getContext();
-        item_list.loadItems(context);
+        item_list_controller.loadItems(context);
         this.inflater = inflater;
         this.container = container;
+
+        update = true;
 
         return rootView;
     }
@@ -43,6 +49,14 @@ public abstract class ItemsFragment extends Fragment implements Observer{
         list_view = rootView.findViewById(id);
         selected_items = filterItems();
     }
+
+
+    public void loadItems(Fragment fragment){
+        this.fragment = fragment;
+        item_list_controller.addObserver(this);
+        item_list_controller.loadItems(context);
+    }
+
 
     public void setAdapter(Fragment fragment){
         adapter = new ItemAdapter(context, selected_items, fragment);
@@ -67,6 +81,16 @@ public abstract class ItemsFragment extends Fragment implements Observer{
                 return true;
             }
         });
+    }
+
+    @Override
+    public void update(){
+        if (update) {
+            adapter = new ItemAdapter(context, selected_items, fragment);
+            list_view.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     /**
