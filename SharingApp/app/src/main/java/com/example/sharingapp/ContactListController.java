@@ -7,11 +7,9 @@ import java.util.List;
 
 public class ContactListController {
     private ContactList contact_list;
-    private ContactListController contact_list_controller;
 
     public ContactListController(ContactList contact_list){
         this.contact_list = contact_list;
-        contact_list_controller = new ContactListController(this.contact_list);
     }
 
     public void setItems(ArrayList<Contact> contact_list) {
@@ -35,7 +33,8 @@ public class ContactListController {
     }
 
     public boolean editContact(ContactController contact_controller, ContactController updated_contact_controller, Context context){
-        EditContactCommand edit_contact_command = new EditContactCommand(contact_list_controller, contact_controller, updated_contact_controller, context);
+
+        EditContactCommand edit_contact_command = new EditContactCommand(contact_list, contact_controller, updated_contact_controller, context);
         edit_contact_command.execute();
         return edit_contact_command.isExecuted();
     }

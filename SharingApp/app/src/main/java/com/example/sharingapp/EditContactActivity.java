@@ -69,7 +69,7 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         ContactController updated_contact_controller = new ContactController(updated_contact);
 
 
-        EditContactCommand edit_contact_command = new EditContactCommand(contact_list_controller, contact_controller, updated_contact_controller, context);
+        EditContactCommand edit_contact_command = new EditContactCommand(contact_list, contact_controller, updated_contact_controller, context);
         edit_contact_command.execute();
 
         boolean success = edit_contact_command.isExecuted();
