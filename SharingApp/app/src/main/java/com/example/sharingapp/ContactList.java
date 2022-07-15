@@ -100,6 +100,7 @@ public class ContactList extends Observable{
         } catch (IOException e) {
             contacts = new ArrayList<Contact>();
         }
+        notifyObservers();
     }
 
     public boolean saveContacts(Context context) {

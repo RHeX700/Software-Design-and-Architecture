@@ -3,6 +3,7 @@ package com.example.sharingapp;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactListController {
     private ContactList contact_list;
@@ -19,8 +20,8 @@ public class ContactListController {
         return contact_list.getContacts();
     }
 
-    public boolean addContact(Contact contact, Context context){
-        AddContactCommand add_contact_command = new AddContactCommand(contact_list, contact, context);
+    public boolean addContact(ContactController contact_controller, Context context){
+        AddContactCommand add_contact_command = new AddContactCommand(contact_list, contact_controller, context);
         add_contact_command.execute();
         return add_contact_command.isExecuted();
     }
@@ -49,7 +50,7 @@ public class ContactListController {
         return contact_list.getSize();
     }
 
-    public void loadItems(Context context) {
+    public void loadContacts(Context context) {
         contact_list.loadContacts(context);
     }
 
@@ -59,5 +60,9 @@ public class ContactListController {
 
     public void removeObserver(Observer observer) {
         contact_list.removeObserver(observer);
+    }
+
+    public List<String> getAllUsernames() {
+        return null;
     }
 }

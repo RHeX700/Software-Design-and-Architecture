@@ -9,13 +9,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditContactActivity extends AppCompatActivity {
+public class EditContactActivity extends AppCompatActivity implements Observer{
 
     private ContactList contact_list = new ContactList();
+    private ContactListController contact_list_controller = new ContactListController(contact_list);
+
     private Contact contact;
+    private ContactController contact_controller;
+
     private EditText email;
     private EditText username;
     private Context context;
+    private boolean onCreateUpdate = false;
+
+    private int pos;
 
 
     @Override
@@ -24,10 +31,10 @@ public class EditContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_contact);
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
+        contact_list_controller.loadContacts(context);
 
         Intent intent = getIntent();
-        int pos = intent.getIntExtra("position", 0);
+        pos = intent.getIntExtra("position", 0);
         contact = contact_list.getContact(pos);
 
         username = findViewById(R.id.username);
@@ -87,5 +94,12 @@ public class EditContactActivity extends AppCompatActivity {
         
 // End EditContactActivity
         finish();
+    }
+
+    @Override
+    public void update() {
+        if (onCreateUpdate){
+
+        }
     }
 }

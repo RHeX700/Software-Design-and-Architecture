@@ -147,7 +147,7 @@ public class EditItemActivity extends AppCompatActivity implements Observer{
         String borrower_str = null;
         if (!status.isChecked()) {
             borrower_str = borrower_spinner.getSelectedItem().toString();
-            contact = contact_list_controller.getContactByUsername(borrower_str);
+            contact = contact_list.getContactByUsername(borrower_str);
         }
 
         Dimensions dimensions = new Dimensions(length_str, width_str, height_str);
