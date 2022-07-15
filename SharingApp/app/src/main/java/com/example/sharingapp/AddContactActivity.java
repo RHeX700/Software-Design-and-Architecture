@@ -53,7 +53,7 @@ public class AddContactActivity extends AppCompatActivity {
         Contact contact = new Contact(username_str, email_str, null);
         ContactController contact_controller = new ContactController(contact);
 
-        AddContactCommand add_contact_command = new AddContactCommand(contact_list, contact, context);
+        AddContactCommand add_contact_command = new AddContactCommand(contact_list, contact_controller, context);
         add_contact_command.execute();
 
         boolean success = add_contact_command.isExecuted();
