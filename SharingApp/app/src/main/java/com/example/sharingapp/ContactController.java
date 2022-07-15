@@ -11,6 +11,10 @@ public class ContactController {
         return contact.getId();
     }
 
+    public String getUsername(){
+        return contact.getUsername();
+    }
+
     public void setId() {
         contact.setId();
     }

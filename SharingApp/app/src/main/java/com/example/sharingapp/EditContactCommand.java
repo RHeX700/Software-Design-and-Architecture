@@ -3,23 +3,23 @@ package com.example.sharingapp;
 import android.content.Context;
 
 public class EditContactCommand extends Command{
-    private ContactList contact_list;
-    private Contact old_contact;
-    private Contact new_contact;
+    private ContactListController contact_list_controller;
+    private ContactController old_contact_controller;
+    private ContactController new_contact_controller;
     private Context context;
 
 
-    public EditContactCommand(ContactList contact_list, Contact old_contact, Contact new_contact, Context context){
-        this.contact_list = contact_list;
-        this.old_contact = old_contact;
-        this.new_contact = new_contact;
+    public EditContactCommand(ContactListController contact_list_controller, ContactController old_contact_controller, ContactController new_contact_controller, Context context){
+        this.contact_list_controller = contact_list_controller;
+        this.old_contact_controller = old_contact_controller;
+        this.new_contact_controller = new_contact_controller;
         this.context = context;
     }
 
     @Override
     public void execute() {
-        contact_list.deleteContact(old_contact);
-        contact_list.addContact(new_contact);
-        setIs_executed(contact_list.saveContacts(context));
+        contact_list_controller.deleteContact(old_contact_controller);
+        contact_list_controller.addContact(new_contact_controller);
+        setIs_executed(contact_list_controller.saveContacts(context));
     }
 }

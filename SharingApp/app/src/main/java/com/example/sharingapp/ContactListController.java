@@ -7,9 +7,11 @@ import java.util.List;
 
 public class ContactListController {
     private ContactList contact_list;
+    private ContactListController contact_list_controller;
 
     public ContactListController(ContactList contact_list){
         this.contact_list = contact_list;
+        contact_list_controller = new ContactListController(this.contact_list);
     }
 
     public void setItems(ArrayList<Contact> contact_list) {
@@ -32,8 +34,8 @@ public class ContactListController {
         return delete_contact_command.isExecuted();
     }
 
-    public boolean editContact(Contact contact, Contact updated_contact, Context context){
-        EditContactCommand edit_contact_command = new EditContactCommand(contact_list, contact, updated_contact, context);
+    public boolean editContact(ContactController contact_controller, ContactController updated_contact_controller, Context context){
+        EditContactCommand edit_contact_command = new EditContactCommand(contact_list_controller, contact_controller, updated_contact_controller, context);
         edit_contact_command.execute();
         return edit_contact_command.isExecuted();
     }
@@ -64,5 +66,33 @@ public class ContactListController {
 
     public List<String> getAllUsernames() {
         return null;
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        return contact_list.isUsernameAvailable(username);
+    }
+
+    public void deleteContact(ContactController contact_controller) {
+        contact_list.deleteContact(contact_controller.getContact());
+    }
+
+    public void addContact(ContactController contact_controller) {
+        contact_list.addContact(contact_controller.getContact());
+    }
+
+    public boolean saveContacts(Context context) {
+        return contact_list.saveContacts(context);
+    }
+
+    public void setContacts(ArrayList<Contact> active_borrowers) {
+        contact_list.setContacts(active_borrowers);
+    }
+
+    public boolean hasContact(Contact contact) {
+        return contact_list.hasContact(contact);
+    }
+
+    public Contact getContactByUsername(String borrower_str) {
+        return contact_list.getContactByUsername(borrower_str);
     }
 }

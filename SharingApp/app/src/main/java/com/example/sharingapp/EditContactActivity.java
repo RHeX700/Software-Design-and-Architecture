@@ -40,9 +40,9 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
 
-        username.setText(contact.getUsername());
-        email.setText(contact.getEmail());
-
+        onCreateUpdate = true;
+        contact_list_controller.loadContacts(context);
+        onCreateUpdate = false;
     }
 
     public void saveContact(View view){
@@ -56,19 +56,20 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
             return;
         }
         String username_str = username.getText().toString();
-        String id = contact.getId(); // Reuse the contact id
+        String id = contact_controller.getId(); // Reuse the contact id
 // Check that username is unique AND username is changed (Note: is username was not changed
 // then this should be fine, because it was already unique.)
 
-        if (!contact_list.isUsernameAvailable(username_str) &&
-                !(contact.getUsername().equals(username_str))) {
+        if (!contact_list_controller.isUsernameAvailable(username_str) &&
+                !(contact_controller.getUsername().equals(username_str))) {
             username.setError("Username already taken!");
             return;
         }
         Contact updated_contact = new Contact(username_str, email_str, id);
+        ContactController updated_contact_controller = new ContactController(updated_contact);
 
 
-        EditContactCommand edit_contact_command = new EditContactCommand(contact_list, contact, updated_contact, context);
+        EditContactCommand edit_contact_command = new EditContactCommand(contact_list_controller, contact_controller, updated_contact_controller, context);
         edit_contact_command.execute();
 
         boolean success = edit_contact_command.isExecuted();
@@ -99,7 +100,8 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
     @Override
     public void update() {
         if (onCreateUpdate){
-
+            username.setText(contact.getUsername());
+            email.setText(contact.getEmail());
         }
     }
 }
