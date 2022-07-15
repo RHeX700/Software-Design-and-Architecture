@@ -41,7 +41,7 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         email = findViewById(R.id.email);
 
         onCreateUpdate = true;
-        contact_list_controller.loadContacts(context);
+        update();
         onCreateUpdate = false;
     }
 

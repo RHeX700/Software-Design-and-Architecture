@@ -63,8 +63,8 @@ public class ContactListController {
         contact_list.removeObserver(observer);
     }
 
-    public List<String> getAllUsernames() {
-        return null;
+    public ArrayList<String> getAllUsernames() {
+        return contact_list.getAllUsernames();
     }
 
     public boolean isUsernameAvailable(String username) {
