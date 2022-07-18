@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddContactActivity extends AppCompatActivity {
+public class AddContactActivity extends AppCompatActivity implements Observer{
 
     private ContactList contact_list = new ContactList();
+    private ContactListController contact_list_controller;
     private Context context;
     private EditText username;
     private EditText email;
@@ -24,7 +25,9 @@ public class AddContactActivity extends AppCompatActivity {
         email =(EditText) findViewById(R.id.email);
 
         context = getApplicationContext();
-        contact_list.loadContacts(context);
+        contact_list_controller = new ContactListController(contact_list);
+        contact_list_controller.loadContacts(context);
+        contact_list_controller.addObserver(this);
     }
 
     public void saveContact(View view){
@@ -62,6 +65,12 @@ public class AddContactActivity extends AppCompatActivity {
             return;
         }
 
+        contact_list_controller.removeObserver(this);
         finish();
+    }
+
+    @Override
+    public void update() {
+        return;
     }
 }

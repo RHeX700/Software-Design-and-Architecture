@@ -36,6 +36,8 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         Intent intent = getIntent();
         pos = intent.getIntExtra("position", 0);
         contact = contact_list.getContact(pos);
+        contact_controller = new ContactController(contact);
+        contact_controller.addObserver(this);
 
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
@@ -77,6 +79,8 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         if(!success){
             return;
         }
+        contact_controller.removeObserver(this);
+
 // End EditContactActivity
         finish();
 
@@ -92,10 +96,14 @@ public class EditContactActivity extends AppCompatActivity implements Observer{
         if(!success){
             return;
         }
-        
-// End EditContactActivity
+
+        // End EditContactActivity
+        contact_list_controller.removeObserver(this);
+
+        contact_controller.removeObserver(this);
         finish();
     }
+
 
     @Override
     public void update() {
