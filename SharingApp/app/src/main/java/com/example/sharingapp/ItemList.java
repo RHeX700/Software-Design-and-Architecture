@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * ItemList class
  */
-public class ItemList {
+public class ItemList extends Observable{
 
     private static ArrayList<Item> items;
     private String FILENAME = "items.sav";
@@ -28,6 +28,7 @@ public class ItemList {
 
     public void setItems(ArrayList<Item> item_list) {
         items = item_list;
+        notifyObservers();
     }
 
     public ArrayList<Item> getItems() {
@@ -36,10 +37,12 @@ public class ItemList {
 
     public void addItem(Item item) {
         items.add(item);
+        notifyObservers();
     }
 
     public void deleteItem(Item item) {
         items.remove(item);
+        notifyObservers();
     }
 
     public Item getItem(int index) {
@@ -75,9 +78,10 @@ public class ItemList {
         } catch (IOException e) {
             items = new ArrayList<Item>();
         }
+        notifyObservers();
     }
 
-    public void saveItems(Context context) {
+    public boolean saveItems(Context context) {
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME, 0);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -87,9 +91,12 @@ public class ItemList {
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public ArrayList<Item> filterItemsByStatus(String status){

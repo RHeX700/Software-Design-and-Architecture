@@ -14,18 +14,19 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ContactList {
+public class ContactList extends Observable{
 
     private static ArrayList<Contact> contacts;
     private String FILENAME = "contacts.sav";
 
     public ContactList(){
-
         contacts = new ArrayList<Contact>();
+        notifyObservers();
     }
 
     public void setContacts(ArrayList<Contact> contacts) {
         this.contacts = contacts;
+        notifyObservers();
     }
 
     public ArrayList<Contact> getContacts() {
@@ -44,10 +45,12 @@ public class ContactList {
 
     public void addContact(Contact contact){
         contacts.add(contact);
+        notifyObservers();
     }
 
     public void deleteContact(Contact contact){
         contacts.remove(contact);
+        notifyObservers();
     }
 
     public Contact getContact(int index){
@@ -97,9 +100,10 @@ public class ContactList {
         } catch (IOException e) {
             contacts = new ArrayList<Contact>();
         }
+        notifyObservers();
     }
 
-    public void saveContacts(Context context) {
+    public boolean saveContacts(Context context) {
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME, 0);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -109,9 +113,14 @@ public class ContactList {
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        notifyObservers();
+
+        return true;
     }
 
     public boolean isUsernameAvailable(String username){
